@@ -8,16 +8,18 @@ multiplyBtn.addEventListener("click", multiply);
 divideBtn.addEventListener("click", divide);
 
 function calculateResult(calculationType) {
+  const enteredNumber = getUserNumberInput();
+
   if (
-    calculationType !== "ADD" &&
-    calculationType !== "SUBTRACT" &&
-    calculationType !== "MULTIPLY" &&
-    calculationType !== "DIVIDE"
+    (calculationType !== "ADD" &&
+      calculationType !== "SUBTRACT" &&
+      calculationType !== "MULTIPLY" &&
+      calculationType !== "DIVIDE") ||
+    !enteredNumber
   ) {
     throw new Error("Invalid calculation type");
   }
 
-  const enteredNumber = getUserNumberInput();
   const initialResult = currentResult;
   let operator;
 
