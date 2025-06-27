@@ -48,8 +48,6 @@ function writeToLog(event, value, monsterHealth, playerHealth) {
     case LOG_EVENT_PLAYER_HEAL:
       logEntry.target = 'PLAYER';
       break;
-    default:
-      logEntry = {};
   }
 
   battleLog.push(logEntry);
