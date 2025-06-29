@@ -12,7 +12,7 @@ const LOG_EVENT_MONSTER_ATTACK = 'MONSTER_ATTACK';
 const LOG_EVENT_PLAYER_HEAL = 'PLAYER_HEAL';
 const LOG_EVENT_GAME_OVER = 'GAME_OVER';
 
-const chosenMaxLife = parseInt(
+let chosenMaxLife = parseInt(
   prompt('Enter maximum life for you and the monster.', '100')
 );
 
@@ -153,6 +153,20 @@ function strongAttackHandler() {
 
 function logHandler() {
   console.log(battleLog);
+
+  let j = 0;
+  outerWhile: do {
+    console.log('Outer loop:', j);
+    innerFor: for (let i = 0; i < 5; i++) {
+      if (i === 3) {
+        break outerWhile; // Break out of the outer loop
+      }
+
+      console.log('Inner loop:', i);
+    }
+
+    j++;
+  } while (j < 3);
 }
 
 attackBtn.addEventListener('click', attackHandler);
