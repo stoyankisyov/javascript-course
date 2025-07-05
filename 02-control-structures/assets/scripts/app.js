@@ -2,59 +2,43 @@ const defaultResult = 0;
 let currentResult = defaultResult;
 let logEntries = [];
 
-addBtn.addEventListener("click", add);
-subtractBtn.addEventListener("click", subtract);
-multiplyBtn.addEventListener("click", multiply);
-divideBtn.addEventListener("click", divide);
+addBtn.addEventListener('click', calculateResult.bind(this, 'ADD'));
+subtractBtn.addEventListener('click', calculateResult.bind(this, 'SUBTRACT'));
+multiplyBtn.addEventListener('click', calculateResult.bind(this, 'MULTIPLY'));
+divideBtn.addEventListener('click', calculateResult.bind(this, 'DIVIDE'));
 
 function calculateResult(calculationType) {
   const enteredNumber = getUserNumberInput();
 
   if (
-    (calculationType !== "ADD" &&
-      calculationType !== "SUBTRACT" &&
-      calculationType !== "MULTIPLY" &&
-      calculationType !== "DIVIDE") ||
+    (calculationType !== 'ADD' &&
+      calculationType !== 'SUBTRACT' &&
+      calculationType !== 'MULTIPLY' &&
+      calculationType !== 'DIVIDE') ||
     !enteredNumber
   ) {
-    throw new Error("Invalid calculation type");
+    throw new Error('Invalid calculation type');
   }
 
   const initialResult = currentResult;
   let operator;
 
-  if (calculationType === "ADD") {
+  if (calculationType === 'ADD') {
     currentResult += enteredNumber;
-    operator = "+";
-  } else if (calculationType === "SUBTRACT") {
+    operator = '+';
+  } else if (calculationType === 'SUBTRACT') {
     currentResult -= enteredNumber;
-    operator = "-";
-  } else if (calculationType === "MULTIPLY") {
+    operator = '-';
+  } else if (calculationType === 'MULTIPLY') {
     currentResult *= enteredNumber;
-    operator = "*";
-  } else if (calculationType === "DIVIDE") {
+    operator = '*';
+  } else if (calculationType === 'DIVIDE') {
     currentResult /= enteredNumber;
-    operator = "/";
+    operator = '/';
   }
 
   createAndWriteOutput(operator, initialResult, enteredNumber);
   createLogEntry(calculationType, initialResult, enteredNumber, currentResult);
-}
-
-function add() {
-  calculateResult("ADD");
-}
-
-function subtract() {
-  calculateResult("SUBTRACT");
-}
-
-function multiply() {
-  calculateResult("MULTIPLY");
-}
-
-function divide() {
-  calculateResult("DIVIDE");
 }
 
 function getUserNumberInput() {
