@@ -11,7 +11,9 @@ const backdrop = document.getElementById('backdrop');
 
 const cancelAddMovieButton = addMovieModal.querySelector('.btn--passive');
 const confirmAddMovieButton = cancelAddMovieButton.nextElementSibling;
+
 const userInputs = addMovieModal.querySelectorAll('input');
+
 const entryTextSection = document.getElementById('entry-text');
 const listRoot = document.getElementById('movie-list');
 
@@ -21,15 +23,28 @@ const toggleBackdrop = () => {
   backdrop.classList.toggle('visible');
 };
 
+const updateUI = () => {
+  if (movies.length === 0) {
+    entryTextSection.style.display = 'block';
+  } else {
+    entryTextSection.style.display = 'none';
+  }
+};
+
+const clearMovieInputs = () => {
+  for (const userInput of userInputs) {
+    userInput.value = '';
+  }
+};
+
 const showMovieModal = () => {
   addMovieModal.classList.add('visible');
   toggleBackdrop();
 };
 
-const backdropClickHandler = () => {
+const showDeleteMovieModal = () => {
+  deleteMovieModal.classList.add('visible');
   toggleBackdrop();
-  closeMovieModal();
-  closeMovieDeletionModal();
 };
 
 const closeMovieModal = () => {
@@ -37,13 +52,49 @@ const closeMovieModal = () => {
   toggleBackdrop();
 };
 
-const cancelMovieModalHandler = () => {
-  closeMovieModal();
-};
-
 const closeMovieDeletionModal = () => {
   deleteMovieModal.classList.remove('visible');
   toggleBackdrop();
+};
+
+const renderNewMovieElement = (id, title, imageUrl, rating) => {
+  const newMovieElement = document.createElement('li');
+  newMovieElement.className = 'movie-element';
+  newMovieElement.innerHTML = `
+    <div class="movie-element_image">
+      <img src="${imageUrl}" alt="${title}">
+    </div>
+    <div class="movie-element_info">
+      <h2>${title}</h2>
+      <p>${rating}/5 stars</p>
+    </div>
+  `;
+  newMovieElement.addEventListener('click', deleteMovieHandler.bind(null, id));
+
+  listRoot.append(newMovieElement);
+};
+
+const deleteMovie = (movieId) => {
+  let movieIndex = 0;
+  for (const movie of movies) {
+    if (movie.id === movieId) {
+      break;
+    }
+
+    movieIndex++;
+  }
+
+  movies.splice(movieIndex, 1);
+  listRoot.children[movieIndex].remove();
+
+  closeMovieDeletionModal();
+  updateUI();
+};
+
+const backdropClickHandler = () => {
+  toggleBackdrop();
+  closeMovieModal();
+  closeMovieDeletionModal();
 };
 
 const addMovieHandler = () => {
@@ -70,9 +121,10 @@ const addMovieHandler = () => {
   };
 
   movies.push(newMovie);
-  console.log(movies);
+
   closeMovieModal();
   clearMovieInputs();
+
   renderNewMovieElement(
     newMovie.id,
     newMovie.title,
@@ -82,53 +134,13 @@ const addMovieHandler = () => {
   updateUI();
 };
 
-const clearMovieInputs = () => {
-  for (const userInput of userInputs) {
-    userInput.value = '';
-  }
-};
-
-const updateUI = () => {
-  if (movies.length === 0) {
-    entryTextSection.style.display = 'block';
-  } else {
-    entryTextSection.style.display = 'none';
-  }
-};
-
-const renderNewMovieElement = (id, title, imageUrl, rating) => {
-  const newMovieElement = document.createElement('li');
-  newMovieElement.className = 'movie-element';
-  newMovieElement.innerHTML = `
-    <div class="movie-element_image">
-      <img src="${imageUrl}" alt="${title}">
-    </div>
-    <div class="movie-element_info">
-      <h2>${title}</h2>
-      <p>${rating}/5 stars</p>
-    </div>
-  `;
-  newMovieElement.addEventListener('click', deleteMovieHandler.bind(null, id));
-  listRoot.append(newMovieElement);
-};
-
-const deleteMovie = (movieId) => {
-  let movieIndex = 0;
-  for (const movie of movies) {
-    if (movie.id === movieId) {
-      break;
-    }
-    movieIndex++;
-  }
-  movies.splice(movieIndex, 1);
-  listRoot.children[movieIndex].remove();
-  closeMovieDeletionModal();
-  updateUI();
+const cancelMovieModalHandler = () => {
+  closeMovieModal();
 };
 
 const deleteMovieHandler = (movieId) => {
-  deleteMovieModal.classList.add('visible');
-  toggleBackdrop();
+  showDeleteMovieModal();
+
   const cancelDeletionButton = deleteMovieModal.querySelector('.btn--passive');
   let confirmDeletionButton = deleteMovieModal.querySelector('.btn--danger');
 
