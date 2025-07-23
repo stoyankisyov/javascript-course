@@ -75,3 +75,28 @@ console.log(
   'Original:',
   testResults
 );
+
+console.log('IndexOf(1.5):', testResults.indexOf(1.5));
+
+console.log('Includes(10.99):', testResults.includes(10.99));
+
+console.log('IndexOf(10.99) !== -1:', testResults.indexOf(10.99) !== -1);
+
+const personData = [{name: 'Max'}, {name: 'Manuel'}];
+console.log(
+  'Reference type, indexOf({name: "Manuel"}), existing but different reference:',
+  personData.indexOf({name: 'Manuel'})
+);
+
+const manuel = personData.find((person, idx, persons) => {
+  return person.name === 'Manuel';
+});
+console.log('Find Manuel:', manuel);
+
+manuel.name = 'Anna';
+console.log('After changing name to Anna:', manuel, personData);
+
+const maxIndex = personData.findIndex((person, idx, persons) => {
+  return person.name === 'Max';
+});
+console.log('findIndex:', maxIndex);
