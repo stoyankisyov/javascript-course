@@ -57,3 +57,21 @@ console.log('After Splice (add "Good Food" at index 1):', hobbies);
 
 const removedElements = hobbies.splice(-2, 1);
 console.log('Hobbies:', hobbies, 'Removed Elements:', removedElements);
+
+const testResults = [1, 5.3, 1.5, 10.99, 1.5, -5, 10];
+console.log('Test Results:', testResults);
+
+const sliceResults = testResults.slice(2);
+console.log('Slice from index 2:', sliceResults);
+
+const storedResults = testResults.concat([3.99, 2]);
+console.log('Concat with [3.99, 2]:', storedResults);
+
+testResults.push(5.91);
+console.log(
+  'Push(5.91) to testResults (original)',
+  'Concat:',
+  storedResults,
+  'Original:',
+  testResults
+);
