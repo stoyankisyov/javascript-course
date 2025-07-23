@@ -141,3 +141,50 @@ const transformedData = data.split(';');
 transformedData[1] = +transformedData[1];
 console.log('Original data:', data);
 console.log('Transformed data using split(";"):', transformedData);
+
+const nameFragments = ['Stoyan', 'Kisyov'];
+console.log('Name fragments:', nameFragments);
+console.log('Joined name:', nameFragments.join(' '));
+
+const copiedNameFragments = [...nameFragments];
+console.log('Copied name fragments:', copiedNameFragments);
+nameFragments.push('Mr');
+console.log(
+  'After push:',
+  'Original:',
+  nameFragments,
+  'Copied:',
+  copiedNameFragments
+);
+
+console.log('Min price using spread operator:', Math.min(...prices));
+
+const persons = [
+  {name: 'Stoyan', age: 25},
+  {name: 'Manuel', age: 31},
+];
+const copiedPersons = [...persons];
+
+persons.push({name: 'Anna', age: 29});
+persons[0].age = 31;
+
+console.log(
+  'Spread operator creates a copy of the reference, which causes change in the copied array after chaning person[0].age in the original:',
+  'Original:',
+  persons,
+  'Copied:',
+  copiedPersons
+);
+
+const nameData = ['Stoyan', 'Kisyov', 'Mr', 25, 'Developer'];
+
+const [firstName, lastName, ...otherInformation] = nameData;
+console.log(
+  '[firstName, lastName, ...otherInformation]',
+  'FirstName:',
+  firstName,
+  'LastName:',
+  lastName,
+  'OtherInformation:',
+  otherInformation
+);
