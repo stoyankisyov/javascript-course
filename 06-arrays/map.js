@@ -1,4 +1,4 @@
-separateSection('Map');
+separateSection('Map & WeakMap');
 const person1 = {name: 'Stoyan'};
 const person2 = {name: 'Manuel'};
 
