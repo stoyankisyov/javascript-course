@@ -100,3 +100,32 @@ const maxIndex = personData.findIndex((person, idx, persons) => {
   return person.name === 'Max';
 });
 console.log('findIndex:', maxIndex);
+
+const prices = [10.99, 5.99, 3.99, 6.59];
+const tax = 0.19;
+const taxAdjustedPrices = [];
+
+prices.forEach((price, idx, prices) => {
+  const priceObj = {index: idx, taxAdjPrice: price * (1 + tax)};
+  taxAdjustedPrices.push(priceObj);
+});
+console.log('Mapped using forEach:', taxAdjustedPrices);
+
+const taxAdjustedPricesUsingMap = prices.map((price, idx, prices) => {
+  const priceObj = {index: idx, taxAdjPrice: price * (1 + tax)};
+  return priceObj;
+});
+console.log('Mapped using map:', taxAdjustedPricesUsingMap);
+
+const sortedPrices = prices.sort((a, b) => {
+  if (a > b) {
+    return 1;
+  } else if (a === b) {
+    return 0;
+  } else {
+    return -1;
+  }
+});
+console.log('Sorted prices in asc order:', sortedPrices);
+
+console.log('Sorted prices in desc order (reverse):', sortedPrices.reverse());
