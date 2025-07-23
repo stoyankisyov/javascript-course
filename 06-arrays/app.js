@@ -129,3 +129,15 @@ const sortedPrices = prices.sort((a, b) => {
 console.log('Sorted prices in asc order:', sortedPrices);
 
 console.log('Sorted prices in desc order (reverse):', sortedPrices.reverse());
+
+const filteredArray = prices.filter((p) => p > 6);
+console.log('Filtered prices:', filteredArray);
+
+const sum = prices.reduce((prevValue, curValue) => prevValue + curValue, 0);
+console.log('Sum using reduce:', sum);
+
+const data = 'new york;10.99;2000';
+const transformedData = data.split(';');
+transformedData[1] = +transformedData[1];
+console.log('Original data:', data);
+console.log('Transformed data using split(";"):', transformedData);
