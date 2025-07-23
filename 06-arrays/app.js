@@ -1,3 +1,8 @@
+const separateSection = (name) => {
+  console.log(`\n--- ${name} ---`);
+};
+
+separateSection('Create Arrays & Iterables');
 const numbers = [1, 2, 3];
 console.log('[]:', numbers);
 
@@ -33,6 +38,7 @@ for (const data of analyticsData) {
 
 console.log('personalData[1]:', personalData[1]);
 
+separateSection('Manipulating Arrays');
 const hobbies = ['Sports', 'Cooking'];
 
 hobbies.push('Reading');
@@ -76,6 +82,7 @@ console.log(
   testResults
 );
 
+separateSection('Searching & Finding');
 console.log('IndexOf(1.5):', testResults.indexOf(1.5));
 
 console.log('Includes(10.99):', testResults.includes(10.99));
@@ -101,6 +108,7 @@ const maxIndex = personData.findIndex((person, idx, persons) => {
 });
 console.log('findIndex:', maxIndex);
 
+separateSection('Iterating & Transforming');
 const prices = [10.99, 5.99, 3.99, 6.59];
 const tax = 0.19;
 const taxAdjustedPrices = [];
@@ -146,6 +154,7 @@ const nameFragments = ['Stoyan', 'Kisyov'];
 console.log('Name fragments:', nameFragments);
 console.log('Joined name:', nameFragments.join(' '));
 
+separateSection('Spread Operators');
 const copiedNameFragments = [...nameFragments];
 console.log('Copied name fragments:', copiedNameFragments);
 nameFragments.push('Mr');
