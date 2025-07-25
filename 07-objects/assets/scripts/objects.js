@@ -16,7 +16,15 @@ const renderMovies = () => {
   movieList.innerHTML = '';
   movies.forEach((movie) => {
     const listItem = document.createElement('li');
-    listItem.textContent = movie.info.title;
+
+    let text = movie.info.title + ' - ';
+    for (const key in movie.info) {
+      if (key !== 'title') {
+        text += key + ': ' + movie.info[key] + ' ';
+      }
+    }
+    listItem.textContent = text;
+
     movieList.appendChild(listItem);
   });
 };
