@@ -1,25 +1,40 @@
 class Product {
-    constructor(title, image, desc, price) {
-        this.title = title;
-        this.imageUrl = image;
-        this.description = desc;
-        this.price = price;
-    }
+  constructor(title, image, desc, price) {
+    this.title = title;
+    this.imageUrl = image;
+    this.description = desc;
+    this.price = price;
+  }
+}
+
+class ShoppingCart {
+  items = [];
+
+  render() {
+    const cartEl = document.createElement('section');
+    cartEl.className = 'cart';
+    cartEl.innerHTML = `
+        <h2>Total: \$${0}</h2>
+        <button>Order Now!</button>
+        `;
+
+    return cartEl;
+  }
 }
 
 class ProductItem {
-    constructor(product) {
-        this.product = product;
-    }
+  constructor(product) {
+    this.product = product;
+  }
 
-    addToCart() {
-        console.log(this.product);
-    }
+  addToCart() {
+    console.log(this.product);
+  }
 
-    render() {
-        const prodEl = document.createElement('li');
-        prodEl.className = 'product-item';
-        prodEl.innerHTML = `
+  render() {
+    const prodEl = document.createElement('li');
+    prodEl.className = 'product-item';
+    prodEl.innerHTML = `
         <div>
           <img src="${this.product.imageUrl}" alt="${this.product.title}" >
           <div class="product-item__content">
@@ -31,45 +46,58 @@ class ProductItem {
         </div>
       `;
 
-        const addCartButton = prodEl.querySelector('button');
-        addCartButton.addEventListener('click', this.addToCart.bind(this));
+    const addCartButton = prodEl.querySelector('button');
+    addCartButton.addEventListener('click', this.addToCart.bind(this));
 
-        return prodEl;
-    }
+    return prodEl;
+  }
 }
 
 class ProductList {
-    products = [
-        new Product(
-            'A Pillow',
-            'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
-            'A soft pillow!',
-            19.99
-        ),
-        new Product(
-            'A Carpet',
-            'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
-            'A carpet which you might like - or not.',
-            89.99
-        )];
+  products = [
+    new Product(
+      'A Pillow',
+      'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
+      'A soft pillow!',
+      19.99
+    ),
+    new Product(
+      'A Carpet',
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
+      'A carpet which you might like - or not.',
+      89.99
+    ),
+  ];
 
-    constructor() {
+  constructor() {}
+
+  render() {
+    const prodList = document.createElement('ul');
+    prodList.className = 'product-list';
+
+    for (const prod of this.products) {
+      const productItem = new ProductItem(prod);
+      const prodEl = productItem.render();
+      prodList.append(prodEl);
     }
 
-    render() {
-        const renderHook = document.getElementById('app');
-        const prodList = document.createElement('ul');
-        prodList.className = 'product-list';
-
-        for (const prod of this.products) {
-            const productItem = new ProductItem(prod);
-            const prodEl = productItem.render();
-            prodList.append(prodEl);
-        }
-
-        renderHook.append(prodList);
-    }
+    return prodList;
+  }
 }
 
-const productList = new ProductList();
-productList.render();
+class Shop {
+  render() {
+    const renderHook = document.getElementById('app');
+
+    const cart = new ShoppingCart();
+    const cartEl = cart.render();
+    const productList = new ProductList();
+    const prodList = productList.render();
+
+    renderHook.append(cartEl);
+    renderHook.append(prodList);
+  }
+}
+
+const shop = new Shop();
+shop.render();
