@@ -1,9 +1,11 @@
-class Product {
-  constructor(title, image, desc, price) {
-    this.title = title;
-    this.imageUrl = image;
-    this.description = desc;
-    this.price = price;
+class App {
+  static init() {
+    const shop = new Shop();
+    this.cart = shop.cart;
+  }
+
+  static addProductToCart(product) {
+    this.cart.addProduct(product);
   }
 }
 
@@ -38,6 +40,82 @@ class Component {
     document.getElementById(this.hookId).append(rootElement);
 
     return rootElement;
+  }
+}
+
+class Product {
+  constructor(title, image, desc, price) {
+    this.title = title;
+    this.imageUrl = image;
+    this.description = desc;
+    this.price = price;
+  }
+}
+
+class ProductItem extends Component {
+  constructor(product, renderHookId) {
+    super(renderHookId, false);
+    this.product = product;
+    this.render();
+  }
+
+  addToCart() {
+    App.addProductToCart(this.product);
+  }
+
+  render() {
+    const prodEl = this.createRootElement('li', 'product-item');
+    prodEl.innerHTML = `
+        <div>
+          <img src="${this.product.imageUrl}" alt="${this.product.title}" >
+          <div class="product-item__content">
+            <h2>${this.product.title}</h2>
+            <h3>\$${this.product.price}</h3>
+            <p>${this.product.description}</p>
+            <button>Add to Cart</button>
+          </div>
+        </div>
+      `;
+
+    const addCartButton = prodEl.querySelector('button');
+    addCartButton.addEventListener('click', this.addToCart.bind(this));
+  }
+}
+
+class ProductList extends Component {
+  #products = [];
+
+  constructor(renderHookId) {
+    super(renderHookId, false);
+    this.fetchProducts();
+    this.render();
+  }
+
+  fetchProducts() {
+    this.#products = [
+      new Product(
+        'A Pillow',
+        'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
+        'A soft pillow!',
+        19.99
+      ),
+      new Product(
+        'A Carpet',
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
+        'A carpet which you might like - or not.',
+        89.99
+      ),
+    ];
+  }
+
+  render() {
+    this.createRootElement('ul', 'product-list', [
+      new ElementAttribute('id', 'prod-list'),
+    ]);
+
+    for (const prod of this.#products) {
+      new ProductItem(prod, 'prod-list');
+    }
   }
 }
 
@@ -81,71 +159,9 @@ class ShoppingCart extends Component {
         <button>Order Now!</button>
         `;
     this.totalOutput = cartEl.querySelector('h2');
+
     const orderButton = cartEl.querySelector('button');
     orderButton.addEventListener('click', this.orderProducts);
-  }
-}
-
-class ProductItem extends Component {
-  constructor(product, renderHookId) {
-    super(renderHookId, false);
-    this.product = product;
-    this.render();
-  }
-
-  addToCart() {
-    App.addProductToCart(this.product);
-  }
-
-  render() {
-    const prodEl = this.createRootElement('li', 'product-item');
-    prodEl.innerHTML = `
-        <div>
-          <img src="${this.product.imageUrl}" alt="${this.product.title}" >
-          <div class="product-item__content">
-            <h2>${this.product.title}</h2>
-            <h3>\$${this.product.price}</h3>
-            <p>${this.product.description}</p>
-            <button>Add to Cart</button>
-          </div>
-        </div>
-      `;
-
-    const addCartButton = prodEl.querySelector('button');
-    addCartButton.addEventListener('click', this.addToCart.bind(this));
-  }
-}
-
-class ProductList extends Component {
-  #products = [];
-
-  constructor(renderHookId) {
-    super(renderHookId, false);
-    this.#products = [
-      new Product(
-        'A Pillow',
-        'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
-        'A soft pillow!',
-        19.99
-      ),
-      new Product(
-        'A Carpet',
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Ardabil_Carpet.jpg/397px-Ardabil_Carpet.jpg',
-        'A carpet which you might like - or not.',
-        89.99
-      ),
-    ];
-    this.render();
-  }
-
-  render() {
-    this.createRootElement('ul', 'product-list', [
-      new ElementAttribute('id', 'prod-list'),
-    ]);
-
-    for (const prod of this.#products) {
-      new ProductItem(prod, 'prod-list');
-    }
   }
 }
 
@@ -157,17 +173,6 @@ class Shop {
   render() {
     this.cart = new ShoppingCart('app');
     new ProductList('app');
-  }
-}
-
-class App {
-  static init() {
-    const shop = new Shop();
-    this.cart = shop.cart;
-  }
-
-  static addProductToCart(product) {
-    this.cart.addProduct(product);
   }
 }
 
