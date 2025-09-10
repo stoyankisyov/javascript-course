@@ -72,7 +72,7 @@ class ShoppingCart extends Component {
   orderProducts = () => {
     console.log('Ordering...');
     console.log(this.items);
-  }
+  };
 
   render() {
     const cartEl = this.createRootElement('section', 'cart');
@@ -117,11 +117,11 @@ class ProductItem extends Component {
 }
 
 class ProductList extends Component {
-  products = [];
+  #products = [];
 
   constructor(renderHookId) {
     super(renderHookId, false);
-    this.products = [
+    this.#products = [
       new Product(
         'A Pillow',
         'https://www.maxpixel.net/static/photo/2x/Soft-Pillow-Green-Decoration-Deco-Snuggle-1241878.jpg',
@@ -143,7 +143,7 @@ class ProductList extends Component {
       new ElementAttribute('id', 'prod-list'),
     ]);
 
-    for (const prod of this.products) {
+    for (const prod of this.#products) {
       new ProductItem(prod, 'prod-list');
     }
   }
