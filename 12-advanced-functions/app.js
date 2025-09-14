@@ -23,5 +23,17 @@ function createTaxCalculator(tax) {
 
 const calculateVAT = createTaxCalculator(0.2);
 const calculateIncomeTax = createTaxCalculator(0.25);
+
 console.log(calculateVAT(100));
 console.log(calculateIncomeTax(100));
+
+// Closure
+let name = 'Stoyan';
+
+function greet() {
+    console.log('Hi '+ name);
+}
+
+name = 'Dimitar';
+
+greet();
