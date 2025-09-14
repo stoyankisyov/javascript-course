@@ -11,3 +11,17 @@ function addRandom(num1) {
 }
 
 console.log(addRandom(5));
+
+// Factory Function
+function createTaxCalculator(tax) {
+  function calculateTax(amount) {
+    return amount * tax;
+  }
+
+  return calculateTax;
+}
+
+const calculateVAT = createTaxCalculator(0.2);
+const calculateIncomeTax = createTaxCalculator(0.25);
+console.log(calculateVAT(100));
+console.log(calculateIncomeTax(100));
