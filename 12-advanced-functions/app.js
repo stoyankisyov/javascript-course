@@ -31,9 +31,16 @@ console.log(calculateIncomeTax(100));
 let name = 'Stoyan';
 
 function greet() {
-    console.log('Hi '+ name);
+  console.log('Hi ' + name);
 }
 
 name = 'Dimitar';
 
 greet();
+
+// Recursion
+function powerOf(x, n) {
+  return n === 1 ? x : x * powerOf(x, n - 1);
+}
+
+console.log(powerOf(2, 3));
