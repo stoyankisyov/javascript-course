@@ -17,3 +17,7 @@ button2.addEventListener('mouseover', onButton2Hover);
 setTimeout(() => {
   button.removeEventListener('click', onButtonClick);
 }, 5000);
+
+window.addEventListener('scroll', (event) => {
+  console.log(event);
+});
