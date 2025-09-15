@@ -10,7 +10,7 @@ function sendXMLHttpRequest(method, url, data) {
     const xhr = new XMLHttpRequest();
 
     xhr.open(method, url);
-
+    xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.responseType = 'json';
 
     xhr.onload = function () {
@@ -68,11 +68,15 @@ async function createPostUsingXML(title, content) {
 
 // Sending an HTTP request using Fetch API
 function sendFetchApiRequest(url, method, data) {
-  return fetch(url, {method: method, body: JSON.stringify(data)}).then(
-    (response) => {
-      return response.json();
-    }
-  );
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((response) => {
+    return response.json();
+  });
 }
 
 async function fetchPostsUsingFetchApi() {
