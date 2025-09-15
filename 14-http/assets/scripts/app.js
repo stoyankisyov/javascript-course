@@ -4,7 +4,8 @@ const form = document.querySelector('#new-post form');
 const fetchbButton = document.querySelector('#available-posts button');
 const postList = document.querySelector('ul');
 
-function sendHttpRequest(method, url, data) {
+// Sending an HTTP request using XMLHttpRequest
+function sendXMLHttpRequest(method, url, data) {
   const promise = new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
@@ -30,11 +31,11 @@ function sendHttpRequest(method, url, data) {
   return promise;
 }
 
-async function fetchPosts() {
+async function fetchPostsUsingXML() {
   try {
-    const responseData = await sendHttpRequest(
+    const responseData = await sendXMLHttpRequest(
       'GET',
-      'https://jsonplaceholder.typicode.com/p'
+      'https://jsonplaceholder.typicode.com/posts'
     );
     const listOfPosts = responseData;
     for (const post of listOfPosts) {
@@ -50,7 +51,7 @@ async function fetchPosts() {
   }
 }
 
-async function createPost(title, content) {
+async function createPostUsingXML(title, content) {
   const userId = Math.random();
   const post = {
     title: title,
@@ -58,27 +59,50 @@ async function createPost(title, content) {
     userId: userId,
   };
 
-  await sendHttpRequest(
+  await sendXMLHttpRequest(
     'POST',
     'https://jsonplaceholder.typicode.com/posts',
     post
   );
 }
 
-fetchbButton.addEventListener('click', fetchPosts);
+// Sending an HTTP request using Fetch API
+function sendFetchApiRequest(url) {
+  return fetch(url).then((response) => {
+    return response.json();
+  });
+}
+
+async function fetchPostsUsingFetchApi() {
+  const responseData = await sendFetchApiRequest(
+    'https://jsonplaceholder.typicode.com/posts'
+  );
+  const listOfPosts = responseData;
+  for (const post of listOfPosts) {
+    const postEl = document.importNode(postTemplate.content, true);
+    postEl.querySelector('h2').textContent = post.title.toUpperCase();
+    postEl.querySelector('p').textContent = post.body;
+    postEl.querySelector('li').id = post.id;
+
+    listElement.append(postEl);
+  }
+}
+
+// EventListeners
+fetchbButton.addEventListener('click', fetchPostsUsingFetchApi);
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   const enteredTitle = event.currentTarget.querySelector('#title').value;
   const enteredContent = event.currentTarget.querySelector('#content').value;
 
-  createPost(enteredTitle, enteredContent);
+  createPostUsingXML(enteredTitle, enteredContent);
 });
 
 postList.addEventListener('click', (event) => {
   if (event.target.tagName === 'BUTTON') {
     const postId = event.target.closest('li').id;
-    sendHttpRequest(
+    sendXMLHttpRequest(
       'DELETE',
       `https://jsonplaceholder.typicode.com/posts/${postId}`
     );
