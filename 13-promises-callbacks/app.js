@@ -35,6 +35,9 @@ function trackUserHandler() {
     })
     .then((data) => {
       console.log(data, positionData);
+    })
+    .catch((err) => {
+      console.log(err);
     });
   setTimer(1000).then(() => {
     console.log('Timer done!');
