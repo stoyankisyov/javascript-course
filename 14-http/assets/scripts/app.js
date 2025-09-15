@@ -67,10 +67,12 @@ async function createPostUsingXML(title, content) {
 }
 
 // Sending an HTTP request using Fetch API
-function sendFetchApiRequest(url) {
-  return fetch(url).then((response) => {
-    return response.json();
-  });
+function sendFetchApiRequest(url, method, data) {
+  return fetch(url, {method: method, body: JSON.stringify(data)}).then(
+    (response) => {
+      return response.json();
+    }
+  );
 }
 
 async function fetchPostsUsingFetchApi() {
@@ -88,6 +90,21 @@ async function fetchPostsUsingFetchApi() {
   }
 }
 
+async function createPostUsingFetchApi(title, content) {
+  const userId = Math.random();
+  const post = {
+    title: title,
+    body: content,
+    userId: userId,
+  };
+
+  await sendFetchApiRequest(
+    'https://jsonplaceholder.typicode.com/posts',
+    'POST',
+    post
+  );
+}
+
 // EventListeners
 fetchbButton.addEventListener('click', fetchPostsUsingFetchApi);
 
@@ -96,7 +113,7 @@ form.addEventListener('submit', (event) => {
   const enteredTitle = event.currentTarget.querySelector('#title').value;
   const enteredContent = event.currentTarget.querySelector('#content').value;
 
-  createPostUsingXML(enteredTitle, enteredContent);
+  createPostUsingFetchApi(enteredTitle, enteredContent);
 });
 
 postList.addEventListener('click', (event) => {
