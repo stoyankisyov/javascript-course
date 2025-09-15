@@ -74,14 +74,26 @@ function sendFetchApiRequest(url, method, data) {
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((response) => {
-    return response.json();
-  });
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response.json();
+      } else {
+        return response.json().then((errData) => {
+          console.log(errData);
+          throw new Error('Something went wrong - client-side.');
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      throw new Error('Failed to send request!');
+    });
 }
 
 async function fetchPostsUsingFetchApi() {
   const responseData = await sendFetchApiRequest(
-    'https://jsonplaceholder.typicode.com/posts'
+    'https://jsonplaceholder.typicode.com/po'
   );
   const listOfPosts = responseData;
   for (const post of listOfPosts) {
