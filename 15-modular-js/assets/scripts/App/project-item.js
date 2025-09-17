@@ -1,4 +1,5 @@
 import { DOMHelper } from '../Utility/dom-helper.js';
+import { Tooltip } from './tooltip.js';
 
 export class ProjectItem {
   hasActiveTooltip = false;
