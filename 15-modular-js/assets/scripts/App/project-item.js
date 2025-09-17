@@ -1,5 +1,6 @@
+import { DOMHelper } from '../Utility/dom-helper.js';
 
-class ProjectItem {
+export class ProjectItem {
   hasActiveTooltip = false;
 
   constructor(id, updateProjectListsFunction, type) {
