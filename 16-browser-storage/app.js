@@ -1,22 +1,21 @@
 const storeButton = document.getElementById('store-btn');
 const retrieveButton = document.getElementById('retrieve-btn');
 
-storeButton.addEventListener('click', () => {
-  const userId = '1';
-  const user = {
-    name: 'Jane Doe',
-    email: 'jane.doe@example.com',
+const dbRequest = indexedDB.open('StorageDummy', 1);
+
+dbRequest.onupgradeneeded = (event) => {
+  const db = event.target.result;
+
+  const objectStore = db.createObjectStore('products', { keyPath: 'id' });
+
+  objectStore.transaction.oncomplete = (event) => {
+    const productStore = db.transaction('products', 'readwrite').objectStore('products');
+    productStore.add({ id: 1, name: 'Product 1', price: 100 });
+    productStore.add({ id: 2, name: 'Product 2', price: 200 });
+    productStore.add({ id: 3, name: 'Product 3', price: 300 });
   };
+};
 
-  document.cookie = `userId=${userId}; max-age=2`;
-  document.cookie = `user=${JSON.stringify(user)};`;
-});
-
-retrieveButton.addEventListener('click', () => {
-  const cookieData = document.cookie.split(';');
-  const data = cookieData.map((cookie) => {
-    return cookie.trim();
-  });
-
-  console.log(data);
-});
+dbRequest.onerror = (event) => {
+  console.error('Error opening database:', event.target.error);
+};
