@@ -7,6 +7,7 @@ const user = {
   email: 'john.doe@example.com',
 };
 
+// Local Storage
 storeButton.addEventListener('click', () => {
   localStorage.setItem('userId', userId);
   localStorage.setItem('user', JSON.stringify(user));
@@ -25,5 +26,22 @@ retrieveButton.addEventListener('click', () => {
     console.log(`Retrieved User: ${JSON.stringify(storedUser)}`);
   } else {
     console.log('No User found in localStorage.');
+  }
+});
+
+// Session Storage
+const sessionData = 'Session Data';
+
+storeButton.addEventListener('click', () => {
+  sessionStorage.setItem('sessionData', sessionData);
+});
+
+retrieveButton.addEventListener('click', () => {
+  const storedSessionData = sessionStorage.getItem('sessionData');
+
+  if (storedSessionData) {
+    console.log(`Retrieved Session Data: ${storedSessionData}`);
+  } else {
+    console.log('No Session Data found in sessionStorage.');
   }
 });
